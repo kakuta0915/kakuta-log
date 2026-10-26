@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  /* 背景・カード・境界線・文字色 */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface2: var(--surface-2);
+  --color-line: var(--border);
+  --color-fg: var(--text);
+  --color-muted: var(--text-muted);
+
+  /* アクセントカラー */
+  --color-teal: var(--teal);
+  --color-amber: var(--amber);
+  --color-coral: var(--coral);
+  --color-blue: var(--blue);
+  --color-red: var(--red);
+
+  /* フォント：通常の文字とコード表示 */
+  --font-sans:
+    var(--font-noto-sans), system-ui, "Hiragino Sans", "Yu Gothic", sans-serif;
+  --font-serif:
+    var(--font-noto-serif), "Hiragino Mincho ProN", "Yu Mincho", serif;
+
+  /* カードなどの角丸 */
+  --radius-card: 12px;
+}
+
+:root {
+  /* 基本の背景・カード・文字色 */
+  --bg: #f3fbff;
+  --surface: #ffffff;
+  --surface-2: #eef0f4;
+  --border: #dde1e8;
+  --text: #1c1f27;
+  --text-muted: #5b6373;
+
+  /* アクセントカラー */
+  --teal: #2f9c86;
+  --amber: #b8792a;
+  --coral: #b8497a;
+  --blue: #3b63c9;
+  --red: #c0432f;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    color-scheme: light dark;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-serif);
+    min-height: 100vh;
+  }
+}

@@ -1,5 +1,18 @@
 import type { Metadata } from "next";
+import { Noto_Sans_JP, Noto_Serif_JP } from "next/font/google";
 import "./globals.css";
+
+const sans = Noto_Sans_JP({
+  variable: "--font-noto-sans", // CSS 変数名
+  display: "swap",
+  preload: false,
+});
+
+const serif = Noto_Serif_JP({
+  variable: "--font-noto-serif",
+  display: "swap",
+  preload: false,
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja">
+    <html lang="ja" className={`${sans.variable} ${serif.variable}`}>
       <body>{children}</body>
     </html>
   );
