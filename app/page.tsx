@@ -1,6 +1,9 @@
+import { Header } from "@/components";
+
 export default function Home() {
   return (
     <div>
+      <Header isAuthenticated={false} />
       <p className="bg-red-50">Hello World</p>
       <p>Hello World</p>
       <p className="text-center">1234567890</p>
@@ -10,5 +13,3 @@ export default function Home() {
     </div>
   );
 }
-
-// グローバルCSSで定義しているフォントスタイルをいちいち要素に指定するのは冗長なので、コンポーネントではなく、ページで指定することで、コンポーネント内ではフォントスタイルを指定する必要がなくなる。のでは？
