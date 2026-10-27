@@ -15,33 +15,35 @@ export default function Header({
 
   return (
     <>
-      <header className="flex p-4 px-6">
+      <header className="sticky top-0 z-40 flex items-center border-b border-line bg-surface backdrop-blur p-4 px-6">
         <Link href="/" className="text-2xl font-bold">
           Kakuta Log
         </Link>
 
         <Nav isAuthenticated={isAuthenticated} variant="desktop" />
 
-        {/* ハンバーガーメニュー */}
-        <button
-          type="button"
-          aria-label={menuOpen ? "メニューを閉じる" : "メニューを開く"}
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((v) => !v)}
-          className="flex h-8 w-8 items-center justify-center rounded-full border border-line text-fg sm:hidden"
-        >
-          {menuOpen ? <X size={16} /> : <Menu size={16} />}
-        </button>
+        {/* Mobile Size  */}
+        <div className="ml-auto sm-hidden">
+          <button
+            type="button"
+            aria-label={menuOpen ? "メニューを閉じる" : "メニューを開く"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+            className="flex justify-center items-center ml-auto h-8 w-8 rounded-full border border-line text-fg"
+          >
+            {menuOpen ? <X size={16} /> : <Menu size={16} />}
+          </button>
 
-        {menuOpen && (
-          <div className="fade-in border-t border-line bg-surface px-4 pb-4 sm:hidden">
-            <Nav
-              isAuthenticated={isAuthenticated}
-              variant="mobile"
-              onNavigate={() => setMenuOpen(false)}
-            />
-          </div>
-        )}
+          {menuOpen && (
+            <div className="absolute left-0 top-full w-full  border-b border-line border-t bg-surface2 px-8 py-6 sm:hidden">
+              <Nav
+                isAuthenticated={isAuthenticated}
+                variant="mobile"
+                onNavigate={() => setMenuOpen(false)}
+              />
+            </div>
+          )}
+        </div>
       </header>
     </>
   );

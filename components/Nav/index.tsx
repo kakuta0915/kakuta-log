@@ -64,7 +64,8 @@ export default function Nav({
             aria-current={active ? "page" : undefined}
             className={
               isMobile
-                ? `flex items-center gap-3 rounded-lg px-3 py-3 text-[15px] ${
+                ? `flex w-full items-center justify-center gap-1 px-3 py-3 text-base ${
+                    // 🔥🔥🔥🔥🔥🔥🔥🔥ここから下のレイアウトを確認する 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
                     active ? "bg-accent/10 font-bold text-accent" : "text-fg"
                   }`
                 : `flex items-center gap-1.5 rounded-md px-2.5 py-2 text-xs transition-colors lg:px-3 lg:text-sm ${
@@ -74,8 +75,12 @@ export default function Nav({
                   }`
             }
           >
-            <Icon size={isMobile ? 18 : 16} />
-            {label}
+            <span className="flex items-center w-[120px]  gap-1">
+              <span className="flex w-4 justify-center shrink-0">
+                <Icon size={16} />
+              </span>
+              {label}
+            </span>
           </Link>
         );
       })}
