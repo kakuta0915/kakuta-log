@@ -10,11 +10,11 @@
   --color-muted: var(--text-muted);
 
   /* アクセントカラー */
-  --color-teal: var(--teal);
+  --color-accent: var(--teal);
   --color-amber: var(--amber);
   --color-coral: var(--coral);
-  --color-blue: var(--blue);
-  --color-red: var(--red);
+  --color-sky: var(--blue);
+  --color-danger: var(--red);
 
   /* フォント：通常の文字とコード表示 */
   --font-sans:

@@ -15,6 +15,7 @@ export default function Header({
 
   return (
     <>
+      {/* タブレッドサイズ・デスクトップサイズで各設定が行なわれていない❌️❌️❌️ */}
       <header className="sticky top-0 z-40 flex items-center border-b border-line bg-surface backdrop-blur p-4 px-6">
         <Link href="/" className="text-2xl font-bold">
           Kakuta Log
@@ -23,7 +24,7 @@ export default function Header({
         <Nav isAuthenticated={isAuthenticated} variant="desktop" />
 
         {/* Mobile Size  */}
-        <div className="ml-auto sm-hidden">
+        <div className="ml-auto md:hidden">
           <button
             type="button"
             aria-label={menuOpen ? "メニューを閉じる" : "メニューを開く"}
@@ -35,7 +36,7 @@ export default function Header({
           </button>
 
           {menuOpen && (
-            <div className="absolute left-0 top-full w-full  border-b border-line border-t bg-surface2 px-8 py-6 sm:hidden">
+            <div className="absolute left-0 top-full w-full border-b border-line border-t bg-surface2 px-8 py-6 md:hidden">
               <Nav
                 isAuthenticated={isAuthenticated}
                 variant="mobile"

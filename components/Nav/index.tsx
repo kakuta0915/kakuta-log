@@ -48,8 +48,8 @@ export default function Nav({
       aria-label={isMobile ? "モバイルメニュー" : "メイン"}
       className={
         isMobile
-          ? "flex flex-col"
-          : "ml-2 hidden items-center gap-0.5 sm:flex lg:ml-6 lg:gap-2"
+          ? "flex md:hidden flex-col items-center gap-1"
+          : "hidden md:flex flex-row items-center md:max-lg:gap-2 md:max-lg:ml-7 lg:ml-15 lg:gap-3"
       }
     >
       {items.map(({ id, href, label, Icon }) => {
@@ -62,20 +62,20 @@ export default function Nav({
             href={href}
             onClick={onNavigate}
             aria-current={active ? "page" : undefined}
-            className={
+            className={`flex items-center justify-center ${
               isMobile
-                ? `flex w-full items-center justify-center gap-1 px-3 py-3 text-base ${
-                    // 🔥🔥🔥🔥🔥🔥🔥🔥ここから下のレイアウトを確認する 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+                ? `w-full p-3 text-base ${
                     active ? "bg-accent/10 font-bold text-accent" : "text-fg"
                   }`
-                : `flex items-center gap-1.5 rounded-md px-2.5 py-2 text-xs transition-colors lg:px-3 lg:text-sm ${
+                : `transition-colors pt-3 pb-0 md:max-lg:px-1 lg:px-2 lg:text-lg ${
                     active
                       ? "font-bold text-accent"
                       : "text-fg hover:text-accent"
                   }`
-            }
+            }`}
           >
-            <span className="flex items-center w-[120px]  gap-1">
+            {/* ここのモバイル・デスクトップのレイアウトから */}
+            <span className="flex items-center w-[120px] gap-1 md:w-fit">
               <span className="flex w-4 justify-center shrink-0">
                 <Icon size={16} />
               </span>
