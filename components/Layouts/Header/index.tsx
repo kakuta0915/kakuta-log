@@ -15,9 +15,11 @@ export default function Header({
 
   return (
     <>
-      {/* タブレッドサイズ・デスクトップサイズで各設定が行なわれていない❌️❌️❌️ */}
       <header className="sticky top-0 z-40 flex items-center border-b border-line bg-surface backdrop-blur p-4 px-6">
-        <Link href="/" className="text-2xl font-bold">
+        <Link
+          href="/"
+          className="font-bold text-2xl md:max-lg:text-2xl lg:text-3xl"
+        >
           Kakuta Log
         </Link>
 
@@ -30,7 +32,7 @@ export default function Header({
             aria-label={menuOpen ? "メニューを閉じる" : "メニューを開く"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((v) => !v)}
-            className="flex justify-center items-center ml-auto h-8 w-8 rounded-full border border-line text-fg"
+            className="flex justify-center items-center h-8 w-8 rounded-full border border-line text-fg"
           >
             {menuOpen ? <X size={16} /> : <Menu size={16} />}
           </button>

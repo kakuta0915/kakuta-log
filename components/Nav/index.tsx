@@ -74,9 +74,8 @@ export default function Nav({
                   }`
             }`}
           >
-            {/* ここのモバイル・デスクトップのレイアウトから */}
-            <span className="flex items-center w-[120px] gap-1 md:w-fit">
-              <span className="flex w-4 justify-center shrink-0">
+            <span className="flex items-center w-30 gap-1 md:w-fit md:max-lg:text-sm lg:text-lg">
+              <span className="flex justify-center shrink-0 w-4 md:max-lg:w-3.5 lg:w-4.5">
                 <Icon size={16} />
               </span>
               {label}
