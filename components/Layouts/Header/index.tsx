@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
 import { Nav } from "@/components";
 
 export default function Header({
@@ -11,7 +12,14 @@ export default function Header({
 }: {
   isAuthenticated: boolean;
 }) {
+  // Header内の実装前に認証に関するファイル作成・設定が必要🔥🔥🔥🔥🔥🔥🔥
+  const pathname = usePathname();
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+  useEffect(() => setMenuOpen(false), [pathname]);
 
   return (
     <>
@@ -51,7 +59,3 @@ export default function Header({
     </>
   );
 }
-
-// 1. ハンバーガーメニュー実装からスタート
-// 2. Navコンポーネント
-// 3. 認証機能実装
