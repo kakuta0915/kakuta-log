@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { Nav } from "@/src/components";
+import { Nav } from "@/components";
 
 export default function Header({
   isAuthenticated,
