@@ -1,9 +1,6 @@
-import { Header } from "@/components";
-
 export default function Home() {
   return (
     <div>
-      <Header isAuthenticated={false} />
       <p className="bg-red-50">Hello World</p>
       <p>Hello World</p>
       <p className="text-center">1234567890</p>
