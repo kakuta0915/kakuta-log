@@ -5,9 +5,8 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogIn, LogOut } from "lucide-react";
 import { Nav } from "@/components";
-import router from "next/router";
 
 export default function Header({
   isAuthenticated,
@@ -19,7 +18,7 @@ export default function Header({
   const [menuOpen, setMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
-  const [loginOpen, setLoginOpen] = useState(false);
+  const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false); // ログインダイアログの表示状態
 
   useEffect(() => setMounted(true), []);
   useEffect(() => setMenuOpen(false), [pathname]);
@@ -29,7 +28,8 @@ export default function Header({
     return () => clearTimeout(t);
   }, [toast]);
 
-  const closeLogin = useCallback(() => setLoginOpen(false), []);
+  // ログインダイアログを閉じる処理
+  const closeLoginDialog = useCallback(() => setIsLoginDialogOpen(false), []);
 
   async function logout() {
     await authClient.signOut();
@@ -39,7 +39,33 @@ export default function Header({
     router.refresh();
   }
 
-  // 🔥🔥🔥🔥🔥ここに実装する🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+  const btnCls =
+    "flex items-center gap-1 rounded-full border border-accent p-3 text-base font-bold text-accent transition-colors hover:bg-accent hover:text-bg md:max-lg:text-sm md:max-lg:py-1 px-2.5 lg:text-lg lg:py-1.5 px-3";
+
+  // PC 用とモバイル用のボタンで id が重複しないように、モバイル用には "-mobile" を付けられるようにする
+  const authBtn = (suffix = "") =>
+    isAuthenticated ? (
+      <button
+        id={`logout-btn${suffix}`}
+        type="button"
+        onClick={logout}
+        className={btnCls}
+      >
+        <LogOut size={16} /> ログアウト
+      </button>
+    ) : (
+      <button
+        id={`login-btn${suffix}`}
+        type="button"
+        onClick={() => {
+          setMenuOpen(false);
+          setIsLoginDialogOpen(true);
+        }}
+        className={btnCls}
+      >
+        <LogIn size={16} /> ログイン
+      </button>
+    );
 
   return (
     <>
@@ -52,6 +78,9 @@ export default function Header({
         </Link>
 
         <Nav isAuthenticated={isAuthenticated} variant="desktop" />
+
+        {/* PC 用ログイン・ログアウトボタン */}
+        <div className="hidden md:block">{authBtn()}</div>
 
         {/* Mobile Size  */}
         <div className="ml-auto md:hidden">
@@ -73,6 +102,10 @@ export default function Header({
                 variant="mobile"
                 onNavigate={() => setMenuOpen(false)}
               />
+              <div className="my-2 border-t border-line" />
+              <div className="[&>button]:w-full [&>button]:justify-center [&>button]:py-3">
+                {authBtn("-mobile")}
+              </div>
             </div>
           )}
         </div>
