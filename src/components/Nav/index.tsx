@@ -64,17 +64,17 @@ export default function Nav({
             aria-current={active ? "page" : undefined}
             className={`flex items-center justify-center ${
               isMobile
-                ? `w-full p-3 text-base ${
+                ? `w-full p-3e ${
                     active ? "bg-accent/10 font-bold text-accent" : "text-fg"
                   }`
-                : `transition-colors pt-3 pb-0 md:max-lg:px-1 lg:px-2 lg:text-lg ${
+                : `transition-colors pt-3 pb-0 md:max-lg:px-1 lg:px-2 ${
                     active
                       ? "font-bold text-accent"
                       : "text-fg hover:text-accent"
                   }`
             }`}
           >
-            <span className="flex items-center w-30 gap-1 md:w-fit md:max-lg:text-sm lg:text-lg">
+            <span className="flex items-center w-30 gap-1 md:w-fit text-base md:max-lg:text-sm lg:text-lg">
               <span className="flex justify-center shrink-0 w-4 md:max-lg:w-3.5 lg:w-4.5">
                 <Icon size={16} />
               </span>
