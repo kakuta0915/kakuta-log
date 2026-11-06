@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { Menu, X, LogIn, LogOut } from "lucide-react";
 import { Nav } from "@/components";
+import LoginDialog from "@/components/LoginDialog";
 
 export default function Header({
   isAuthenticated,
@@ -17,6 +18,7 @@ export default function Header({
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false); // ログインダイアログの表示状態
 
@@ -110,6 +112,15 @@ export default function Header({
           )}
         </div>
       </header>
+      <LoginDialog
+        open={loginOpen}
+        onClose={closeLoginDialog}
+        onSuccess={() => {
+          setLoginOpen(false);
+          router.push("/tasks");
+          router.refresh();
+        }}
+      />
     </>
   );
 }

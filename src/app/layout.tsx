@@ -1,8 +1,9 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
-import { getSessionSafe } from "@/lib/session";
 import { Noto_Sans_JP, Noto_Serif_JP } from "next/font/google";
-import "./globals.css";
 import { Header } from "@/components";
+import SessionHeader from "@/components/SessionHeader";
+import "./globals.css";
 
 const sans = Noto_Sans_JP({
   variable: "--font-noto-sans", // CSS 変数名
@@ -26,11 +27,14 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getSessionSafe();
   return (
     <html lang="ja" className={`${sans.variable} ${serif.variable}`}>
       <body>
-        <Header isAuthenticated={!!session} />
+        {/* 認証状態を取得するまで仮の Header を表示し、取得が完了したら実際の認証状態を反映した Header に切り替える */}
+        <Suspense fallback={<Header isAuthenticated={false} />}>
+          <SessionHeader />
+        </Suspense>
+
         <main>{children}</main>
       </body>
     </html>

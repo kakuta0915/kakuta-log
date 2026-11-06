@@ -88,9 +88,22 @@ export default function LoginDialog({
   const inputCls =
     "w-full rounded-lg border border-line bg-surface2 px-3 py-2.5 text-sm text-fg outline-none transition-colors placeholder:text-muted focus:border-accent";
 
-  return <div>ここからスタート🔥🔥🔥🔥</div>;
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="login-title"
+      className="fade-in w-full max-w-sm rounded-card border border-line bg-surface p-6 shadow-2xl"
+      onMouseDown={(e) => e.stopPropagation()}
+    >
+      <div className="mb-5">ああああ</div>
+      ここからスタート🔥🔥🔥🔥
+    </div>
+  );
 }
 
-// KeyboardEvent は、キーボード操作によって発生するイベントの情報を扱う型
-// keydown：キーが押されたときにイベントを発生させる
-// e.key：実際に何のキーが押されたのかを取得する
+// KeyboardEvent: キーボード操作によって発生するイベントの情報を扱う型
+// keydown: キーが押されたときにイベントを発生させる
+// e.key: 実際に何のキーが押されたのかを取得する
+// onMouseDown: マウスのボタンが押されたときに処理を実行する、React のイベント属性
+// stopPropagation() : イベントが親要素へ伝わることを止めます
