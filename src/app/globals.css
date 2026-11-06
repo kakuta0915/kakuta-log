@@ -54,10 +54,25 @@
   }
 
   body {
+    min-height: 100vh;
     background-color: var(--bg);
     color: var(--text);
     font-family: var(--font-serif);
-    min-height: 100vh;
+    font-size: 1rem;
+  }
+
+  /* Tablet */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    body {
+      font-size: 17px;
+    }
+  }
+
+  /* Desktop */
+  @media (min-width: 1024px) {
+    body {
+      font-size: 18px;
+    }
   }
 }
 

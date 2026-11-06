@@ -18,7 +18,6 @@ export default function Header({
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false); // ログインダイアログの表示状態
 
@@ -42,7 +41,7 @@ export default function Header({
   }
 
   const btnCls =
-    "flex items-center gap-1 rounded-full border border-accent p-3 text-base font-bold text-accent transition-colors hover:bg-accent hover:text-bg md:max-lg:text-sm md:max-lg:py-1 px-2.5 lg:text-lg lg:py-1.5 px-3";
+    "flex items-center gap-1 rounded-full border border-accent p-3 font-bold text-accent transition-colors hover:bg-accent hover:text-bg md:max-lg:text-sm md:max-lg:py-1 px-2.5 lg:py-1.5 px-3";
 
   // PC 用とモバイル用のボタンで id が重複しないように、モバイル用には "-mobile" を付けられるようにする
   const authBtn = (suffix = "") =>
@@ -113,10 +112,10 @@ export default function Header({
         </div>
       </header>
       <LoginDialog
-        open={loginOpen}
+        open={isLoginDialogOpen}
         onClose={closeLoginDialog}
         onSuccess={() => {
-          setLoginOpen(false);
+          setIsLoginDialogOpen(false);
           router.push("/tasks");
           router.refresh();
         }}

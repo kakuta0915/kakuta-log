@@ -86,7 +86,7 @@ export default function LoginDialog({
   }
 
   const inputCls =
-    "w-full rounded-lg border border-line bg-surface2 px-3 py-2.5 text-sm text-fg outline-none transition-colors placeholder:text-muted focus:border-accent";
+    "w-full rounded-lg border border-line bg-surface2 px-3 py-2.5 text-fg outline-none transition-colors placeholder:text-muted focus:border-accent";
 
   return (
     <div
@@ -96,8 +96,12 @@ export default function LoginDialog({
       className="fade-in w-full max-w-sm rounded-card border border-line bg-surface p-6 shadow-2xl"
       onMouseDown={(e) => e.stopPropagation()}
     >
-      <div className="mb-5">ああああ</div>
-      ここからスタート🔥🔥🔥🔥
+      <div className="mb-5 flex items-senter justify-between">
+        <h2 id="login-title" className="">
+          ログイン
+        </h2>
+        ここからスタート🔥🔥🔥🔥
+      </div>
     </div>
   );
 }
