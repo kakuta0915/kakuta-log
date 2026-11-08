@@ -8,6 +8,7 @@
   --color-line: var(--border);
   --color-fg: var(--text);
   --color-muted: var(--text-muted);
+  --color-placeholder: var(--text-placeholder);
 
   /* アクセントカラー */
   --color-accent: var(--teal);
@@ -34,6 +35,7 @@
   --border: #dde1e8;
   --text: #1c1f27;
   --text-muted: #5b6373;
+  --text-placeholder: #929baa;
 
   /* アクセントカラー */
   --teal: #2f9c86;

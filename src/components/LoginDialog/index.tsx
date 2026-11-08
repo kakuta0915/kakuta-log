@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { X } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import { X } from "lucide-react";
 
 const MSG_EMAIL = "メールアドレスを正しく入力してください。";
 const MSG_PASSWORD = "パスワードを入力してください。";
@@ -86,21 +86,99 @@ export default function LoginDialog({
   }
 
   const inputCls =
-    "w-full rounded-lg border border-line bg-surface2 px-3 py-2.5 text-fg outline-none transition-colors placeholder:text-muted focus:border-accent";
+    "w-full rounded-lg border border-line bg-surface2 p-2.5 text-fg outline-none transition-colors placeholder:text-placeholder focus:border-accent";
 
   return (
     <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="login-title"
-      className="fade-in w-full max-w-sm rounded-card border border-line bg-surface p-6 shadow-2xl"
-      onMouseDown={(e) => e.stopPropagation()}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 p-4"
+      onMouseDown={onClose}
     >
-      <div className="mb-5 flex items-senter justify-between">
-        <h2 id="login-title" className="">
-          ログイン
-        </h2>
-        ここからスタート🔥🔥🔥🔥
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="login-title"
+        className="fade-in w-full max-w-sm rounded-card border border-line bg-surface p-6 shadow-2xl"
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        <div className="mb-5 flex items-senter justify-between">
+          <h2 id="login-title" className="font-bold">
+            ログイン
+          </h2>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="閉じる"
+            className="rounded-md p-1 text-muted hover:text-fg"
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        <form action="post" onSubmit={submit} noValidate className="space-y-4">
+          <div>
+            <label
+              htmlFor="login-email"
+              className="mb-1.5 block p-1 text-muted"
+            >
+              メールアドレス
+            </label>
+            <input
+              id="login-email"
+              ref={emailRef}
+              type="email"
+              autoComplete="username"
+              placeholder="example@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={inputCls}
+              aria-invalid={Boolean(errors.email)}
+              aria-describedby={errors.email ? "login-email-err" : undefined}
+            />
+            {errors.email && (
+              <p id="login-email-err" className="mt-1.5 text-sm text-danger">
+                {errors.email}
+              </p>
+            )}
+          </div>
+          <div>
+            <label
+              htmlFor="login-password"
+              className="mb-1.5 block p-1 text-muted"
+            >
+              パスワード
+            </label>
+            <input
+              id="login-password"
+              type="password"
+              autoComplete="current-password"
+              placeholder="abcde1234"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={inputCls}
+              aria-invalid={Boolean(errors.password)}
+              aria-describedby={
+                errors.password ? "login-password-err" : undefined
+              }
+            />
+            {errors.password && (
+              <p id="login-password-err" className="mt-1.5 text-sm text-danger">
+                {errors.password}
+              </p>
+            )}
+          </div>
+          {errors.form && (
+            <p role="alert" className="text-sm text-danger">
+              {errors.form}
+            </p>
+          )}
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full rounded-lg bg-accent py-2.5 font-bold text-bg transition-opacity hover:opacity-90 disabled:opacity-60"
+          >
+            {isSubmitting ? "確認中..." : "ログイン"}
+          </button>
+        </form>
       </div>
     </div>
   );
