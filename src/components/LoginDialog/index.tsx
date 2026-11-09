@@ -97,18 +97,21 @@ export default function LoginDialog({
         role="dialog"
         aria-modal="true"
         aria-labelledby="login-title"
-        className="fade-in w-full max-w-sm rounded-card border border-line bg-surface p-6 shadow-2xl"
+        className="fade-in w-full max-w-sm md:max-lg:max-w-md lg:max-w-lg rounded-card border border-line bg-surface p-6 shadow-2xl"
         onMouseDown={(e) => e.stopPropagation()}
       >
         <div className="mb-5 flex items-senter justify-between">
-          <h2 id="login-title" className="font-bold">
+          <h2
+            id="login-title"
+            className="font-bold text-lg md:max-lg:text-lg lg:text-xl"
+          >
             ログイン
           </h2>
           <button
             type="button"
             onClick={onClose}
             aria-label="閉じる"
-            className="rounded-md p-1 text-muted hover:text-fg"
+            className="rounded-full p-1.5 md:max-lg:p-2 lg:p-2 text-muted border border-line hover:text-fg"
           >
             <X size={18} />
           </button>
@@ -174,7 +177,7 @@ export default function LoginDialog({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-lg bg-accent py-2.5 font-bold text-bg transition-opacity hover:opacity-90 disabled:opacity-60"
+            className="w-full rounded-lg bg-accent py-2.5 md:max-lg:py-3 lg:py-3.5 mt-4 md:max-lg:mt-5 lg:mt-6  font-bold text-bg transition-opacity hover:opacity-90 disabled:opacity-60"
           >
             {isSubmitting ? "確認中..." : "ログイン"}
           </button>
