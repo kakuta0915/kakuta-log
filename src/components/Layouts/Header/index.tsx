@@ -111,6 +111,15 @@ export default function Header({
           )}
         </div>
       </header>
+
+      {toast && (
+        <div
+          role="status"
+          className="fade-in fixed bottom-6 left-1/2 z-50 -tranlate-x-1/2 rounded-full border border-line bg-surface px-5 py-2.5  shadow-lg"
+        >
+          {toast}
+        </div>
+      )}
       <LoginDialog
         open={isLoginDialogOpen}
         onClose={closeLoginDialog}
