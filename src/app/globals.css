@@ -8,13 +8,14 @@
   --color-line: var(--border);
   --color-fg: var(--text);
   --color-muted: var(--text-muted);
+  --color-placeholder: var(--text-placeholder);
 
   /* アクセントカラー */
-  --color-teal: var(--teal);
+  --color-accent: var(--teal);
   --color-amber: var(--amber);
   --color-coral: var(--coral);
-  --color-blue: var(--blue);
-  --color-red: var(--red);
+  --color-sky: var(--blue);
+  --color-danger: var(--red);
 
   /* フォント：通常の文字とコード表示 */
   --font-sans:
@@ -34,6 +35,7 @@
   --border: #dde1e8;
   --text: #1c1f27;
   --text-muted: #5b6373;
+  --text-placeholder: #929baa;
 
   /* アクセントカラー */
   --teal: #2f9c86;
@@ -54,9 +56,39 @@
   }
 
   body {
+    min-height: 100vh;
     background-color: var(--bg);
     color: var(--text);
     font-family: var(--font-serif);
-    min-height: 100vh;
+    font-size: 1rem;
   }
+
+  /* Tablet */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    body {
+      font-size: 17px;
+    }
+  }
+
+  /* Desktop */
+  @media (min-width: 1024px) {
+    body {
+      font-size: 18px;
+    }
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fade-in {
+  animation: fade-in 0.18s ease-out;
 }
