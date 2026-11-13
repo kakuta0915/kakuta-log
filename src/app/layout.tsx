@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Noto_Sans_JP, Noto_Serif_JP } from "next/font/google";
 import { Header } from "@/components";
 import SessionHeader from "@/components/SessionHeader";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 const sans = Noto_Sans_JP({
@@ -28,14 +29,19 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja" className={`${sans.variable} ${serif.variable}`}>
+    <html
+      lang="ja"
+      className={`${sans.variable} ${serif.variable}`}
+      suppressHydrationWarning
+    >
       <body>
-        {/* 認証状態を取得するまで仮の Header を表示し、取得が完了したら実際の認証状態を反映した Header に切り替える */}
-        <Suspense fallback={<Header isAuthenticated={false} />}>
-          <SessionHeader />
-        </Suspense>
-
-        <main>{children}</main>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          {/* 認証状態を取得するまで仮の Header を表示し、取得が完了したら実際の認証状態を反映した Header に切り替える */}
+          <Suspense fallback={<Header isAuthenticated={false} />}>
+            <SessionHeader />
+          </Suspense>
+          <main>{children}</main>
+        </ThemeProvider>
       </body>
     </html>
   );
