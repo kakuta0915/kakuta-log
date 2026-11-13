@@ -41,7 +41,7 @@ export default function Header({
   }
 
   const btnCls =
-    "flex items-center gap-1 rounded-full border border-accent p-3 font-bold text-accent transition-colors hover:bg-accent hover:text-bg md:max-lg:text-sm md:max-lg:py-1 px-2.5 lg:py-1.5 px-3";
+    "flex items-center gap-1 rounded-full border border-accent p-3 font-bold text-accent transition-colors hover:bg-accent hover:text-bg md:max-lg:text-sm md:max-lg:py-1 md:max-lg:px-2.5 lg:py-1.5 lg:px-3";
 
   // PC 用とモバイル用のボタンで id が重複しないように、モバイル用には "-mobile" を付けられるようにする
   const authBtn = (suffix = "") =>
@@ -115,7 +115,7 @@ export default function Header({
       {toast && (
         <div
           role="status"
-          className="fade-in fixed bottom-6 left-1/2 z-50 -tranlate-x-1/2 rounded-full border border-line bg-surface px-5 py-2.5  shadow-lg"
+          className="fade-in fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full border bg-surface text-accent border-accent px-5 py-2 shadow-lg"
         >
           {toast}
         </div>
@@ -127,6 +127,7 @@ export default function Header({
           setIsLoginDialogOpen(false);
           router.push("/tasks");
           router.refresh();
+          setToast("ログインしました。");
         }}
       />
     </>
