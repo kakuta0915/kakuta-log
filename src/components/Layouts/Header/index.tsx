@@ -107,7 +107,7 @@ export default function Header({
             aria-label={menuOpen ? "メニューを閉じる" : "メニューを開く"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((v) => !v)} // ボタンをクリックすると、現在の menuOpen の値を反転
-            className="flex justify-center items-center h-8 w-8 rounded-full border border-line text-fg"
+            className="flex justify-center items-center h-8 w-8 rounded-full border border-line text-fg md:hidden"
           >
             {menuOpen ? <X size={16} /> : <Menu size={16} />}
           </button>
@@ -115,7 +115,7 @@ export default function Header({
 
         {/* menuOpen が true のときだけ、メニューを表示 */}
         {menuOpen && (
-          <div className="absolute left-0 top-full w-full border-b border-line border-t bg-surface2 px-8 py-6 md:hidden">
+          <div className="fade-in absolute left-0 top-full w-full border-b border-line border-t bg-surface2 px-8 py-6 md:hidden">
             <Nav
               isAuthenticated={isAuthenticated}
               variant="mobile"
