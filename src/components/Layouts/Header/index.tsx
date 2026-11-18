@@ -5,9 +5,10 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import { Menu, X, LogIn, LogOut } from "lucide-react";
+import { Menu, X, LogIn, LogOut, Sun, Moon } from "lucide-react";
 import { Nav } from "@/components";
 import LoginDialog from "@/components/LoginDialog";
+import { useTheme } from "next-themes";
 
 export default function Header({
   isAuthenticated,
@@ -17,6 +18,7 @@ export default function Header({
   const pathname = usePathname();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false); // ログインダイアログの表示状態
@@ -40,8 +42,9 @@ export default function Header({
     router.refresh();
   }
 
+  const isDark = resolvedTheme === "dark";
   const btnCls =
-    "flex items-center gap-1 rounded-full border border-accent p-3 font-bold text-accent transition-colors hover:bg-accent hover:text-bg md:max-lg:text-sm md:max-lg:py-1 px-2.5 lg:py-1.5 px-3";
+    "flex items-center gap-1 rounded-full border border-accent p-3 font-bold text-accent transition-colors hover:bg-accent hover:text-bg md:max-lg:text-sm md:max-lg:py-1 md:max-lg:px-2.5 lg:py-1.5 lg:px-3";
 
   // PC 用とモバイル用のボタンで id が重複しないように、モバイル用には "-mobile" を付けられるようにする
   const authBtn = (suffix = "") =>
@@ -77,49 +80,64 @@ export default function Header({
         >
           Kakuta Log
         </Link>
-
         <Nav isAuthenticated={isAuthenticated} variant="desktop" />
-
-        {/* PC 用ログイン・ログアウトボタン */}
-        <div className="hidden md:block">{authBtn()}</div>
-
-        {/* Mobile Size  */}
-        <div className="ml-auto md:hidden">
+        <div className="ml-auto flex items-center gap-2">
+          <button
+            id="theme-btn"
+            type="button"
+            aria-label="Theme切り替え"
+            onClick={() => setTheme(isDark ? "light" : "dark")}
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-line bg-surface2 text-muted transition-colors hover:text-accent"
+          >
+            {mounted ? (
+              isDark ? (
+                <Sun size={16} />
+              ) : (
+                <Moon size={16} />
+              )
+            ) : (
+              <span className="h-4 w-4" />
+            )}
+          </button>
+          {/* PC 用ログイン・ログアウトボタン */}
+          <div className="hidden md:block">{authBtn()}</div>
+          {/* Mobile 用: ハンバーガーメニュー  */}
           <button
             type="button"
             aria-label={menuOpen ? "メニューを閉じる" : "メニューを開く"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((v) => !v)} // ボタンをクリックすると、現在の menuOpen の値を反転
-            className="flex justify-center items-center h-8 w-8 rounded-full border border-line text-fg"
+            className="flex justify-center items-center h-8 w-8 rounded-full border border-line text-fg md:hidden"
           >
             {menuOpen ? <X size={16} /> : <Menu size={16} />}
           </button>
-
-          {/* menuOpen が true のときだけ、メニューを表示 */}
-          {menuOpen && (
-            <div className="absolute left-0 top-full w-full border-b border-line border-t bg-surface2 px-8 py-6 md:hidden">
-              <Nav
-                isAuthenticated={isAuthenticated}
-                variant="mobile"
-                onNavigate={() => setMenuOpen(false)}
-              />
-              <div className="my-2 border-t border-line" />
-              <div className="[&>button]:w-full [&>button]:justify-center [&>button]:py-3">
-                {authBtn("-mobile")}
-              </div>
-            </div>
-          )}
         </div>
+
+        {/* menuOpen が true のときだけ、メニューを表示 */}
+        {menuOpen && (
+          <div className="fade-in absolute left-0 top-full w-full border-b border-line border-t bg-surface2 px-8 py-6 md:hidden">
+            <Nav
+              isAuthenticated={isAuthenticated}
+              variant="mobile"
+              onNavigate={() => setMenuOpen(false)}
+            />
+            <div className="my-2 border-t border-line" />
+            <div className="[&>button]:w-full [&>button]:justify-center [&>button]:py-3">
+              {authBtn("-mobile")}
+            </div>
+          </div>
+        )}
       </header>
 
       {toast && (
         <div
           role="status"
-          className="fade-in fixed bottom-6 left-1/2 z-50 -tranlate-x-1/2 rounded-full border border-line bg-surface px-5 py-2.5  shadow-lg"
+          className="fade-in fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full border bg-surface text-accent border-accent px-5 py-2 shadow-lg"
         >
           {toast}
         </div>
       )}
+
       <LoginDialog
         open={isLoginDialogOpen}
         onClose={closeLoginDialog}
@@ -127,6 +145,7 @@ export default function Header({
           setIsLoginDialogOpen(false);
           router.push("/tasks");
           router.refresh();
+          setToast("ログインしました。");
         }}
       />
     </>

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark \*));
+
 @theme {
   /* 背景・カード・境界線・文字色 */
   --color-bg: var(--bg);
@@ -43,6 +45,23 @@
   --coral: #b8497a;
   --blue: #3b63c9;
   --red: #c0432f;
+}
+
+.dark {
+  /* 基本の背景・カード・文字色 */
+  --bg: #14161c;
+  --surface: #1b1f27;
+  --surface-2: #21252f;
+  --border: #2b303c;
+  --text: #e7e9ee;
+  --text-muted: #8b92a6;
+
+  /* アクセントカラー */
+  --teal: #7dd3c0;
+  --amber: #f2b880;
+  --coral: #e08fb0;
+  --blue: #7aa2f7;
+  --red: #e8846f;
 }
 
 @layer base {
