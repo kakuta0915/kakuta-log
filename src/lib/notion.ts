@@ -1,11 +1,11 @@
 import { Client } from "@notionhq/client";
 import { addMonthsStart, startOfMonth, toJstYmd, type Ymd } from "./date";
-// import type {
-//   CategoryInfo,
-//   ChildTask,
-//   ParentTask,
-//   LearnSession,
-// } from "./types";
+import type {
+  CategoryInfo,
+  ChildTask,
+  ParentTask,
+  LearnSession,
+} from "./types";
 
 // Notion API クライアント
 export const notion = new Client({
@@ -52,6 +52,7 @@ type Prop = {
   [key: string]: unknown;
 };
 
+// Notion から取得する 1 ページ分のデータ
 interface Page {
   id: string;
   properties: Record<string, Prop | undefined>;
@@ -69,16 +70,13 @@ async function getDataSourceId(databaseId: string): Promise<string> {
   const database = await notion.databases.retrieve({
     database_id: databaseId,
   });
-
   const dataSources = (database as { data_sources?: { id: string }[] })
     .data_sources;
-
   const id = dataSources?.[0]?.id;
 
   if (!id) {
     throw new Error(`データソースが見つかりません: ${databaseId}`);
   }
-
   dataSourceCache.set(databaseId, id);
 
   return id;
@@ -87,11 +85,15 @@ async function getDataSourceId(databaseId: string): Promise<string> {
 // データベースの全データを取得
 async function queryAll(databaseId: string, filter?: unknown): Promise<Page[]> {
   const dataSourceId = await getDataSourceId(databaseId);
-
   const pages: Page[] = [];
+
+  // データの続きを取得するための目印（API は一度に全て取得するとは限らない）
   let cursor: string | undefined;
 
+  // do...while は、条件を確認する前に必ず一度処理を実行する繰り返し文
+  // 今回の場合、最初のデータ取得を必ず実行し、その後、続きがある場合に繰り返す
   do {
+    // Notion API でデータ取得
     const response = await notion.dataSources.query({
       data_source_id: dataSourceId,
       page_size: 100,
@@ -116,7 +118,6 @@ async function queryAll(databaseId: string, filter?: unknown): Promise<Page[]> {
 }
 
 // ---- プロパティ読み取りヘルパ ----
-
 // タイトル
 const title = (p?: Prop): string =>
   p?.type === "title" && Array.isArray(p.title)
@@ -217,13 +218,10 @@ const dateRange = (
 const priorityOf = (name: string): number =>
   [...name].filter((c) => c === "☆" || c === "★").length;
 
-// ---- カテゴリ ----
-
+// カテゴリデータベースから全カテゴリを取得
 export async function fetchCategories(): Promise<Map<string, CategoryInfo>> {
   const S = NOTION_SCHEMA.category;
-
   const pages = await queryAll(process.env.NOTION_CATEGORY_DB_ID!);
-
   const map = new Map<string, CategoryInfo>();
 
   for (const p of pages) {
@@ -233,23 +231,19 @@ export async function fetchCategories(): Promise<Map<string, CategoryInfo>> {
       domain: select(p.properties[S.domain]) || "その他",
     });
   }
-
   return map;
 }
 
-// ---- 学習時間（直近 13 ヶ月分）----
-
+// 学習時間（直近 13 ヶ月分）を取得
 export async function fetchLearnSessions(today: Ymd): Promise<{
   categories: CategoryInfo[];
   sessions: LearnSession[];
 }> {
   const S = NOTION_SCHEMA.learn;
-
   const since = addMonthsStart(startOfMonth(today), -12);
-
   const [categories, pages] = await Promise.all([
     fetchCategories(),
-    queryAll(process.env.NOTION_Learn_TIME_DB_ID!, {
+    queryAll(process.env.NOTION_LEARN_TIME_DB_ID!, {
       property: S.date,
       date: { on_or_after: since },
     }),
@@ -297,12 +291,10 @@ export async function fetchLearnSessions(today: Ymd): Promise<{
   };
 }
 
-// ---- タスク（親 + 子）----
-
+// 親タスクと子タスクを取得
 export async function fetchTasks(): Promise<ParentTask[]> {
   const P = NOTION_SCHEMA.parent;
   const C = NOTION_SCHEMA.child;
-
   const [categories, parentPages, childPages] = await Promise.all([
     process.env.NOTION_CATEGORY_DB_ID
       ? fetchCategories()
@@ -315,7 +307,6 @@ export async function fetchTasks(): Promise<ParentTask[]> {
   const toBase = (p: Page, S: typeof P | typeof C) => {
     const period = dateRange(p.properties[S.period]);
     const completed = dateRange(p.properties[S.completed]).start;
-
     const cat = categories.get(relationIds(p.properties[S.category])[0] ?? "");
 
     return {

@@ -20,7 +20,7 @@ export interface LearnSession {
   id: string;
   title: string;
   domain: string;
-  categry: string;
+  category: string;
   date: Ymd;
   minutes: number;
 }
