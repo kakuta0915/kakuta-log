@@ -6,7 +6,7 @@ const JST_OFFSET = 9 * 3_600_000; // 日本標準時と UTC の時差の 9 時�
 
 // 日付をミリ秒に変換
 function toMs(ymd: Ymd): number {
-  const [y, m, d] = ymd.split("_").map(Number); // 日付を 年・月・日 に分解
+  const [y, m, d] = ymd.split("-").map(Number); // 日付を 年・月・日 に分解
   return Date.UTC(y, m - 1, d); // 指定した年月日を UTC 基準のミリ秒に変換
 }
 
@@ -38,7 +38,7 @@ export function diffDays(a: Ymd, b: Ymd): number {
 
 // 週の開始日を取得
 export function startOfWeek(ymd: Ymd): Ymd {
-  const dow = new Date(toMs(ymd)).getUTCDay(); // 曜日を数値で取得 (月:0 ~ 日: 7)
+  const dow = new Date(toMs(ymd)).getUTCDay(); // 曜日を数値で取得 (月:0 ~ 土: 6)
   return addDays(ymd, -((dow + 6) % 7)); // 基準日から何日前に戻れば月曜日になるかを計算し、addDays() で日付を取得
 }
 
