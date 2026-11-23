@@ -7,7 +7,7 @@ export interface CategoryInfo {
 }
 
 // アウトプット（microCMS）
-export interface OutputItem {
+export interface BlogArticle {
   id: string;
   title: string;
   domain: string;
