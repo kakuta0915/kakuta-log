@@ -11,7 +11,7 @@ export function loadOutputs(today: Ymd): Promise<Loaded<BlogArticle[]>> {
   return loadWith("microCMS", () => fetchBlogArticles(today));
 }
 
-export function loadStudySessions(today: Ymd): Promise<Loaded<LearnSession[]>> {
+export function loadLearnSessions(today: Ymd): Promise<Loaded<LearnSession[]>> {
   return loadWith(
     "Notion(学習時間)",
     async () => (await fetchLearnSessions(today)).sessions,
